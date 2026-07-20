@@ -1,55 +1,58 @@
-﻿
-import { Link, useLocation } from "react-router-dom";
 import React, { useMemo, useState } from "react";
-import back from "../../assets/photo/arrow.png";
-import adminLogo from '../../dashboard/dashboardLOGO/adminLogo.png'
-import next from "../../assets/photo/next.png";
-import search from "../../assets/photo/search.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import arrow from "../assets/photo/arrow.png";
+import next from "../assets/photo/next.png";
+import search from "../assets/photo/search.png";
+import adminLogo from "../dashboard/dashboardLOGO/adminLogo.png";
+import { getEntry } from "./reportData";
 
-const students = [
-  {
-    name: "Rein Paul Asinas",
-    section: "1A",
-    email: "202310010@btech.ph.education",
-    number: "202310010",
-  },
-  {
-    name: "John Cruz",
-    section: "1A",
-    email: "202310011@btech.ph.education",
-    number: "202310011",
-  },
-  {
-    name: "Maria Santos",
-    section: "1A",
-    email: "202310012@btech.ph.education",
-    number: "202310012",
-  },
-];
+const ReportSubject = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-const List = () => {
+  const yearLevel = location.state?.yearLevel;
+  const yearTitle = location.state?.yearTitle ?? "Year Level";
+  const code = location.state?.code;
+  const professor = location.state?.professor;
+
   const [query, setQuery] = useState("");
 
+  const entry = getEntry(yearLevel, code, professor);
+
   const filteredStudents = useMemo(() => {
-    if (!query.trim()) return students;
+    if (!entry) return [];
+    if (!query.trim()) return entry.students;
     const q = query.trim().toLowerCase();
-    return students.filter((s) => s.name.toLowerCase().includes(q));
-  }, [query]);
+    return entry.students.filter((s) => s.name.toLowerCase().includes(q));
+  }, [entry, query]);
+
+  if (!entry) {
+    return (
+      <div className="min-h-screen w-full bg-gray-100 font-RB p-10">
+        <p className="text-gray-500">No data found for this subject.</p>
+        <Link to="/report" className="text-[#1C6100] underline text-sm">
+          Back to Report
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-full max-w-full overflow-hidden bg-gray-100 font-RB box-border flex flex-col">
       {/* Header */}
       <div className="p-5 pt-14 flex justify-between items-start border-b-5 border-[#D9D9D9] shrink-0">
         <div className="flex flex-col items-start gap-1 text-[1.5625rem]">
-          <Link to="/section">
-            <img src={back} alt="Back" className="w-4 h-4 active:scale-95" />
-          </Link>
+          <button onClick={() => navigate(-1)} className="cursor-pointer">
+            <img src={arrow} alt="Back" className="w-4 h-4 active:scale-95" />
+          </button>
           <div className="flex items-center gap-3 mt-1">
-            <span className="font-bold text-black/50">1st Year</span>
-            <img src={next} alt="Next" className="w-3 h-3" />
-            <span className="font-bold text-black/50">Sections</span>
-            <img src={next} alt="Next" className="w-3 h-3" />
-            <span className="font-bold text-black">1A</span>
+            <Link to="/report" className="font-bold text-black/50">
+              Report
+            </Link>
+            <img src={next} className="w-3 h-3" alt="" />
+            <span className="font-bold text-black">
+              {yearTitle.replace("BSIT ", "")}
+            </span>
           </div>
         </div>
 
@@ -66,7 +69,10 @@ const List = () => {
           <div className="rounded-3xl border border-gray-200 bg-white shadow-sm p-6 flex-1 min-h-0 flex flex-col">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6 shrink-0">
               <div>
-                <h2 className="font-bold text-xl md:text-2xl">Section 1A</h2>
+                <h2 className="font-bold text-xl md:text-2xl">
+                  {entry.code} ({entry.title})
+                </h2>
+                <p className="mt-2 text-sm md:text-base text-gray-700">{entry.professor}</p>
               </div>
 
               <div className="w-full max-w-xs md:w-auto">
@@ -106,16 +112,12 @@ const List = () => {
                     </tr>
                   ) : (
                     filteredStudents.map((s, idx) => (
-                      <Link
-                        key={idx}
-                        to="/viewGrade"
-                        className="table-row border-b border-gray-100 last:border-b-0 hover:bg-gray-50 cursor-pointer"
-                      >
+                      <tr key={idx} className="border-b border-gray-100 last:border-b-0">
                         <td className="px-4 py-3">{s.name}</td>
                         <td className="px-4 py-3">{s.section}</td>
                         <td className="px-4 py-3 underline text-[#1C6100]">{s.email}</td>
-                        <td className="px-4 py-3">{s.number}</td>
-                      </Link>
+                        <td className="px-4 py-3">{s.studentNumber}</td>
+                      </tr>
                     ))
                   )}
                 </tbody>
@@ -128,4 +130,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default ReportSubject;

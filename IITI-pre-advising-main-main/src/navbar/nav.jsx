@@ -43,6 +43,24 @@ export function useSidebar() {
   return context;
 }
 
+const ReportIcon = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M9 3.75h4.19a1.5 1.5 0 011.06.44l3.56 3.56a1.5 1.5 0 01.44 1.06V19.5A1.5 1.5 0 0116.75 21H9A1.5 1.5 0 017.5 19.5v-15A1.5 1.5 0 019 3.75z"
+    />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 12h6M10 15.5h6M10 8.5h2.5" />
+  </svg>
+);
+
 const SubjectListingIcon = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -98,6 +116,9 @@ function Nav() {
     "/viewSection": "schedule",
     "/subject-listing": "subjectlisting",
     "/subject-listing-students": "subjectlisting",
+    "/report": "report",
+    "/report/year": "report",
+    "/report/subject": "report",
     "/settings": "setting",
     "/profile": "setting",
     "/section": "yearlevel",
@@ -112,6 +133,7 @@ function Nav() {
     { key: "yearlevel", path: "/year-level", label: "Year Level", icon: yearLevelLogo, alt: "Year Level" },
     { key: "pre-advising", path: "/pre-advising", label: "Pre-Advising", icon: preAdvisingLogo, alt: "Pre Advising" },
     { key: "schedule", path: "/schedule", label: "Schedule", icon: scheduleLogo, alt: "Schedule" },
+    { key: "report", path: "/report", label: "Report", alt: "Report" },
     { key: "setting", path: "/settings", label: "Settings", icon: settingLogo, alt: "Settings" }
   ];
 
@@ -161,6 +183,8 @@ function Nav() {
               >
                 {item.key === "subjectlisting" ? (
                   <SubjectListingIcon className={`h-5 w-5 shrink-0 ${collapsed ? "" : "mr-3"}`} />
+                ) : item.key === "report" ? (
+                  <ReportIcon className={`h-5 w-5 shrink-0 ${collapsed ? "" : "mr-3"}`} />
                 ) : (
                   <img
                     src={item.icon}

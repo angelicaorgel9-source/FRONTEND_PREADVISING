@@ -21,6 +21,10 @@ import ViewSection from "./schedule/viewSection.jsx";
 import ViewSchedule from "./schedule/viewSchedule.jsx";
 import Settings from "./settings/settings.jsx";
 
+import Report from "./report/report.jsx";
+import ReportYear from "./report/reportYear.jsx";
+import ReportSubject from "./report/reportSubject.jsx";
+
 import Profile from "./settings/profile.jsx";
 
 import PreAdvisingFirstSem from "./pre-advising/pre-AdvisingFirstSem.jsx";
@@ -94,6 +98,9 @@ function App() {
             />
             <Route path="/viewSection" element={<ViewSection />} />
             <Route path="/viewSchedule" element={<ViewSchedule />} />
+            <Route path="/report" element={<Report />} />
+            <Route path="/report/year" element={<ReportYear />} />
+            <Route path="/report/subject" element={<ReportSubject />} />
           </Route>
         </Routes>
       </SidebarProvider>
