@@ -84,7 +84,7 @@ const ReportYear = () => {
         </Link>
       </div>
 
-      <main className="px-5 sm:px-10 py-8">
+      <main className="px-5 sm:px-8 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Controls */}
           <div className="flex flex-wrap items-end gap-3 mb-6">
@@ -154,13 +154,13 @@ const ReportYear = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handlePrintOne(entry)}
-                      className="px-4 py-2 bg-white text-[#1C6100] text-sm rounded-sm hover:bg-gray-100 active:scale-95 cursor-pointer"
+                      className="px-3 py-1 bg-white text-[#1C6100] text-xs rounded-sm hover:bg-gray-100 active:scale-95 cursor-pointer"
                     >
                       Print
                     </button>
                     <button
                       onClick={() => handleExportOne(entry)}
-                      className="px-4 py-2 bg-white text-[#1C6100] text-sm rounded-sm hover:bg-gray-100 active:scale-95 cursor-pointer"
+                      className="px-3 py-1 bg-white text-[#1C6100] text-xs rounded-sm hover:bg-gray-100 active:scale-95 cursor-pointer"
                     >
                       Export
                     </button>
